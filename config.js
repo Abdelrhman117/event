@@ -12,8 +12,8 @@ const CONFIG = {
   ADMIN_PASS: 'coffeeschool2026',
 
   EVENT: {
-    name: 'Coffee School Event',
-    date: 'الثلاثاء، 7 يوليو 2026',
+    name: 'ONE DAY BY CCINO',
+    date: '07-07-2026',
     time: 'الساعة 1:00 ظهراً',
   },
 };
