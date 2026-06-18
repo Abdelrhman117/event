@@ -666,6 +666,8 @@ button { cursor: pointer; font-family: inherit; }
 }
 
 /* ── API Error Banner ── */
+.api-error-banner[hidden] { display: none; }
+
 .api-error-banner {
   display: flex;
   align-items: flex-start;
