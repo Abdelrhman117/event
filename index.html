@@ -27,9 +27,10 @@
   <nav class="reg-nav" role="navigation" aria-label="شريط التنقل">
     <div class="container">
       <div class="reg-nav__inner">
-        <div class="brand" aria-label="Coffee School">
-          <span class="brand-icon" aria-hidden="true">🍵</span>
-          <span>Coffee School × CCINO</span>
+        <div class="brand" aria-label="Coffee School × CCINO">
+          <img src="assets/coffee-school-logo.png" alt="Coffee School" class="brand-logo" />
+          <span class="brand-sep" aria-hidden="true">×</span>
+          <img src="assets/ccino-logo.png" alt="CCINO" class="brand-logo brand-logo--round" />
         </div>
         <div class="event-badge" role="status">
           <span aria-hidden="true">🔴</span>
@@ -71,9 +72,25 @@
             </div>
             <div class="event-detail" role="listitem">
               <span class="icon" aria-hidden="true">📍</span>
-              <span>كوفي سكول</span>
+              <span>طنطا</span>
             </div>
           </div>
+
+          <div class="location-card" role="listitem">
+            <span class="location-card__icon" aria-hidden="true">📍</span>
+            <div class="location-card__text">
+              <span class="location-card__label">العنوان</span>
+              <span class="location-card__address">طنطا - الاستاد - شارع البندارى - بجوار المصرية للسيارات</span>
+            </div>
+          </div>
+
+          <a href="tel:01027870687" class="location-card" role="listitem">
+            <span class="location-card__icon" aria-hidden="true">📞</span>
+            <div class="location-card__text">
+              <span class="location-card__label">للتواصل والاستفسار</span>
+              <span class="location-card__address" dir="ltr">01027870687</span>
+            </div>
+          </a>
 
           <ul class="hero__highlights" aria-label="محتوى اليوم التدريبي">
             <li>✔️ مشروبات ووصفات جديدة ترندية</li>
@@ -223,7 +240,12 @@
   <!-- Footer -->
   <footer class="reg-footer" role="contentinfo">
     <div class="container">
-      <p>🍵 ONE DAY BY CCINO × Coffee School &mdash; جميع الحقوق محفوظة 2026</p>
+      <div class="footer-logos">
+        <img src="assets/coffee-school-logo.png" alt="Coffee School" class="brand-logo brand-logo--sm" />
+        <span class="brand-sep" aria-hidden="true">×</span>
+        <img src="assets/ccino-logo.png" alt="CCINO" class="brand-logo brand-logo--sm brand-logo--round" />
+      </div>
+      <p>ONE DAY BY CCINO × Coffee School &mdash; جميع الحقوق محفوظة 2026</p>
     </div>
   </footer>
 
