@@ -6,25 +6,25 @@
 
 /* ── CSS Custom Properties ── */
 :root {
-  /* Brand Colors */
-  --clr-bg:          #0f0b08;
-  --clr-surface:     #1a1209;
-  --clr-surface-2:   #241a0e;
-  --clr-surface-3:   #2e2113;
+  /* Brand Colors — CCINO Matcha Green */
+  --clr-bg:          #0c1a0f;
+  --clr-surface:     #122416;
+  --clr-surface-2:   #18301c;
+  --clr-surface-3:   #1f3d23;
 
-  --clr-gold:        #c9973a;
-  --clr-gold-light:  #e8b86d;
-  --clr-gold-dim:    #7a5a22;
-  --clr-cream:       #f5e6c8;
-  --clr-cream-dim:   #a89070;
+  --clr-gold:        #8aab3f;
+  --clr-gold-light:  #b9d66b;
+  --clr-gold-dim:    #4a6324;
+  --clr-cream:       #f0e9d2;
+  --clr-cream-dim:   #a9b596;
 
-  --clr-accent:      #6f3d1b;
+  --clr-accent:      #2f4a22;
   --clr-error:       #e05c5c;
-  --clr-success:     #5cb87a;
+  --clr-success:     #8aab3f;
 
   /* Glass Effect */
-  --glass-bg:        rgba(201, 151, 58, 0.06);
-  --glass-border:    rgba(201, 151, 58, 0.2);
+  --glass-bg:        rgba(138, 171, 63, 0.07);
+  --glass-border:    rgba(138, 171, 63, 0.22);
   --glass-blur:      24px;
 
   /* Spacing */
@@ -137,8 +137,8 @@ button { cursor: pointer; font-family: inherit; }
 .btn:active { transform: scale(0.97); }
 
 .btn--primary {
-  background: linear-gradient(135deg, var(--clr-gold), #a0721f);
-  color: #0f0b08;
+  background: linear-gradient(135deg, var(--clr-gold), #5c7a2c);
+  color: #0c1a0f;
   box-shadow: 0 4px 20px rgba(201, 151, 58, 0.35);
 }
 .btn--primary:hover {
@@ -275,19 +275,19 @@ button { cursor: pointer; font-family: inherit; }
 }
 .bg-orb--1 {
   width: 600px; height: 600px;
-  background: radial-gradient(circle, #c9973a, transparent 70%);
+  background: radial-gradient(circle, #8aab3f, transparent 70%);
   top: -200px; left: -100px;
   animation-delay: 0s;
 }
 .bg-orb--2 {
   width: 400px; height: 400px;
-  background: radial-gradient(circle, #6f3d1b, transparent 70%);
+  background: radial-gradient(circle, #2f4a22, transparent 70%);
   bottom: -100px; right: -50px;
   animation-delay: -6s;
 }
 .bg-orb--3 {
   width: 300px; height: 300px;
-  background: radial-gradient(circle, #c9973a, transparent 70%);
+  background: radial-gradient(circle, #8aab3f, transparent 70%);
   top: 50%; left: 60%;
   animation-delay: -3s;
   opacity: 0.08;
@@ -572,6 +572,17 @@ button { cursor: pointer; font-family: inherit; }
 
 .event-detail .icon { color: var(--clr-gold); font-size: 1rem; }
 
+/* Highlights List */
+.hero__highlights {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-xs);
+  margin-top: var(--sp-lg);
+  font-size: 0.95rem;
+  color: var(--clr-cream);
+}
+
 /* Partners Section */
 .partners-text {
   margin-top: var(--sp-xl);
@@ -641,7 +652,7 @@ button { cursor: pointer; font-family: inherit; }
   width: 18px;
   height: 18px;
   border: 2px solid rgba(0,0,0,0.3);
-  border-top-color: #0f0b08;
+  border-top-color: #0c1a0f;
   border-radius: 50%;
   animation: spin 0.7s linear infinite;
   display: none;
@@ -1001,17 +1012,17 @@ tbody td {
     display: block !important;
     text-align: center;
     margin-bottom: 24px;
-    border-bottom: 2px solid #c9973a;
+    border-bottom: 2px solid #8aab3f;
     padding-bottom: 16px;
   }
 
-  .print-header h1 { font-size: 20px; color: #6f3d1b; }
+  .print-header h1 { font-size: 20px; color: #2f4a22; }
   .print-header p  { font-size: 13px; color: #555; margin-top: 4px; }
 
   thead th {
-    background: #f5e6c8 !important;
-    color: #6f3d1b !important;
-    border: 1px solid #c9973a !important;
+    background: #eef0d8 !important;
+    color: #2f4a22 !important;
+    border: 1px solid #8aab3f !important;
     print-color-adjust: exact;
     -webkit-print-color-adjust: exact;
   }
