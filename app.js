@@ -26,43 +26,51 @@ function showToast(message, type = 'info', duration = 3500) {
   }, duration);
 }
 
-// ── API Client ────────────────────────────────────────────────
+// ── API Client (Google Apps Script CORS-safe) ─────────────────
+async function postToAppsScript(payload) {
+  // Google Apps Script returns a 302 redirect on POST.
+  // Using a form-encoded approach avoids CORS preflight issues.
+  const res = await fetch(CONFIG.API_URL, {
+    method:  'POST',
+    redirect: 'follow',
+    body:    JSON.stringify(payload),
+  });
+  // Apps Script may redirect to a plain-text/JSON URL
+  const text = await res.text();
+  try {
+    return JSON.parse(text);
+  } catch {
+    // If redirect returned HTML or non-JSON, treat as failure
+    throw new Error('استجابة غير صالحة من السيرفر. تأكد من نشر الـ Apps Script بشكل صحيح.');
+  }
+}
+
 const API = {
   // Register new attendee (public)
   async register(data) {
-    const res = await fetch(CONFIG.API_URL, {
-      method:  'POST',
-      headers: { 'Content-Type': 'text/plain' }, // Apps Script requires text/plain for CORS
-      body:    JSON.stringify({ action: 'register', ...data }),
-    });
-    return res.json();
+    return postToAppsScript({ action: 'register', ...data });
   },
 
   // Fetch all registrations (admin)
   async getAll(pass) {
     const url = `${CONFIG.API_URL}?action=getAll&pass=${encodeURIComponent(pass)}`;
-    const res = await fetch(url);
-    return res.json();
+    const res = await fetch(url, { redirect: 'follow' });
+    const text = await res.text();
+    try {
+      return JSON.parse(text);
+    } catch {
+      throw new Error('فشل قراءة البيانات.');
+    }
   },
 
   // Update a registration (admin)
   async update(pass, data) {
-    const res = await fetch(CONFIG.API_URL, {
-      method:  'POST',
-      headers: { 'Content-Type': 'text/plain' },
-      body:    JSON.stringify({ action: 'update', pass, ...data }),
-    });
-    return res.json();
+    return postToAppsScript({ action: 'update', pass, ...data });
   },
 
   // Delete a registration (admin)
   async delete(pass, id) {
-    const res = await fetch(CONFIG.API_URL, {
-      method:  'POST',
-      headers: { 'Content-Type': 'text/plain' },
-      body:    JSON.stringify({ action: 'delete', pass, id }),
-    });
-    return res.json();
+    return postToAppsScript({ action: 'delete', pass, id });
   },
 };
 
