@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>لوحة التحكم — Coffee School Event</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- Background FX -->
+  <div class="bg-orbs" aria-hidden="true">
+    <div class="bg-orb bg-orb--1"></div>
+    <div class="bg-orb bg-orb--2"></div>
+  </div>
+  <div class="noise-overlay" aria-hidden="true"></div>
+
+  <!-- Toast -->
+  <div id="toast-container" role="status" aria-live="polite" aria-atomic="true"></div>
+
+  <!-- ════════ LOGIN SCREEN ════════ -->
+  <section id="login-screen" class="admin-login" aria-labelledby="login-heading">
+    <article class="glass-card login-card">
+      <span class="login-card__icon" aria-hidden="true">🔐</span>
+      <h1 id="login-heading" class="login-card__title">لوحة التحكم</h1>
+      <p class="login-card__sub">Coffee School Event — Admin</p>
+
+      <form id="login-form" class="login-form" novalidate aria-label="نموذج تسجيل الدخول">
+        <div class="form-group">
+          <label class="form-label" for="admin-password">كلمة السر</label>
+          <input
+            id="admin-password"
+            type="password"
+            class="form-input"
+            placeholder="أدخل كلمة السر"
+            required
+            autocomplete="current-password"
+            aria-required="true"
+            aria-describedby="login-error"
+          />
+          <span id="login-error" class="form-error" role="alert"></span>
+        </div>
+        <button id="login-btn" type="submit" class="btn btn--primary btn--full">
+          <div class="spinner" aria-hidden="true"></div>
+          <span class="btn-text">دخول 🔓</span>
+        </button>
+      </form>
+    </article>
+  </section>
+
+  <!-- ════════ ADMIN APP ════════ -->
+  <div id="admin-app" class="admin-app" role="application" aria-label="لوحة تحكم الأدمن">
+
+    <!-- Topbar -->
+    <header class="admin-topbar" role="banner">
+      <div class="container--wide">
+        <div class="admin-topbar__inner">
+          <div class="admin-title">
+            <span aria-hidden="true">☕</span>
+            Coffee School — لوحة التحكم
+          </div>
+
+          <div class="admin-topbar__actions no-print">
+            <button id="refresh-btn" class="btn btn--outline btn--sm" aria-label="تحديث البيانات">
+              <span aria-hidden="true">🔄</span>
+              <span class="btn-text">تحديث</span>
+            </button>
+            <button id="export-pdf-btn" class="btn btn--outline btn--sm" aria-label="تصدير PDF">
+              <span aria-hidden="true">📄</span>
+              <span class="btn-text">تصدير PDF</span>
+            </button>
+            <button id="logout-btn" class="btn btn--danger btn--sm" aria-label="تسجيل الخروج">
+              <span aria-hidden="true">🚪</span>
+              <span class="btn-text">خروج</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main -->
+    <main class="admin-main" id="admin-main-content">
+      <div class="container--wide">
+
+        <!-- Stats -->
+        <div class="stats-grid no-print" role="region" aria-label="إحصائيات الفعالية">
+          <div class="stat-card">
+            <span class="stat-card__label">إجمالي المسجلين</span>
+            <span class="stat-card__value" id="stat-total" aria-live="polite">—</span>
+            <span class="stat-card__icon" aria-hidden="true">👥</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-card__label">الفعالية</span>
+            <span class="stat-card__value" style="font-size:1.1rem; padding-top:4px;">7/7/2026</span>
+            <span class="stat-card__icon" aria-hidden="true">📅</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-card__label">الوقت</span>
+            <span class="stat-card__value" style="font-size:1.1rem; padding-top:4px;">1:00 ظهراً</span>
+            <span class="stat-card__icon" aria-hidden="true">🕐</span>
+          </div>
+        </div>
+
+        <!-- Table Panel -->
+        <div class="table-panel" role="region" aria-labelledby="table-title">
+
+          <!-- Print Header (visible only when printing) -->
+          <div class="print-header">
+            <h1>قائمة حضور — Coffee School Event</h1>
+            <p>الثلاثاء، 7 يوليو 2026 — الساعة 1:00 ظهراً</p>
+            <p class="print-date"></p>
+          </div>
+
+          <!-- Panel Header -->
+          <div class="table-panel__header no-print">
+            <h2 id="table-title" class="table-panel__title">
+              <span aria-hidden="true">📋</span>
+              قائمة المسجلين
+              <span class="table-count-badge" id="table-count-badge" aria-label="عدد النتائج"></span>
+            </h2>
+
+            <div class="table-actions">
+              <div class="search-input-wrap">
+                <span class="search-icon" aria-hidden="true">🔍</span>
+                <input
+                  id="admin-search"
+                  type="search"
+                  class="form-input"
+                  placeholder="بحث..."
+                  aria-label="بحث في قائمة المسجلين"
+                  autocomplete="off"
+                />
+              </div>
+            </div>
+          </div>
+
+          <!-- Table -->
+          <div class="table-wrap" role="region" aria-label="جدول المسجلين" tabindex="0">
+            <table id="registrations-table" aria-live="polite">
+              <thead>
+                <tr>
+                  <th scope="col">#</th>
+                  <th scope="col">الاسم</th>
+                  <th scope="col">اسم الكافيه</th>
+                  <th scope="col">رقم الموبايل</th>
+                  <th scope="col">تاريخ التسجيل</th>
+                  <th scope="col" class="no-print">إجراءات</th>
+                </tr>
+              </thead>
+              <tbody id="table-body">
+                <tr>
+                  <td colspan="6">
+                    <div class="empty-table">
+                      <div class="empty-icon" aria-hidden="true">⏳</div>
+                      <p>جارٍ تحميل البيانات…</p>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- ════════ EDIT MODAL ════════ -->
+  <div id="edit-modal" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="edit-modal-title" hidden>
+    <div class="modal">
+      <div class="modal-header">
+        <h2 id="edit-modal-title" class="modal-title">✏️ تعديل التسجيل</h2>
+        <button class="modal-close" id="edit-modal-close" aria-label="إغلاق نافذة التعديل">✕</button>
+      </div>
+      <div class="modal-body">
+        <input type="hidden" id="edit-id" />
+
+        <div class="form-group">
+          <label class="form-label" for="edit-name">الاسم الكامل</label>
+          <input id="edit-name" type="text" class="form-input" required minlength="3" aria-required="true" />
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="edit-cafe">اسم الكافيه</label>
+          <input id="edit-cafe" type="text" class="form-input" required minlength="2" aria-required="true" />
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="edit-mobile">رقم الموبايل</label>
+          <input id="edit-mobile" type="tel" class="form-input" required pattern="^01[0125][0-9]{8}$" aria-required="true" />
+        </div>
+
+        <div id="edit-error" class="api-error-banner" hidden role="alert">
+          <span id="edit-error-text"></span>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button id="edit-cancel-btn" class="btn btn--outline">إلغاء</button>
+        <button id="edit-save-btn" class="btn btn--primary">
+          <div class="spinner" aria-hidden="true"></div>
+          <span class="btn-text">💾 حفظ التعديلات</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════ CONFIRM DELETE MODAL ════════ -->
+  <div id="delete-modal" class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="delete-modal-title" hidden>
+    <div class="modal">
+      <div class="modal-header">
+        <h2 id="delete-modal-title" class="modal-title">🗑️ تأكيد الحذف</h2>
+        <button class="modal-close" id="delete-modal-close" aria-label="إغلاق نافذة الحذف">✕</button>
+      </div>
+      <div class="modal-body">
+        <p style="color: var(--clr-cream-dim); line-height: 1.8;">
+          هل أنت متأكد من حذف تسجيل
+          <strong id="delete-name-display" style="color: var(--clr-cream);"></strong>؟
+          <br/>لا يمكن التراجع عن هذا الإجراء.
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button id="delete-cancel-btn" class="btn btn--outline">إلغاء</button>
+        <button id="delete-confirm-btn" class="btn btn--danger">
+          <div class="spinner" aria-hidden="true"></div>
+          <span class="btn-text">🗑️ حذف</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script src="config.js"></script>
+  <script src="app.js"></script>
+  <script>
+    // ════════════════════════════════════════════
+    // Admin Dashboard Logic
+    // ════════════════════════════════════════════
+
+    let adminPass       = '';
+    let allRegistrations = [];
+    let deleteTargetId  = '';
+
+    // ── Elements ──
+    const loginScreen   = document.getElementById('login-screen');
+    const adminApp      = document.getElementById('admin-app');
+    const loginForm     = document.getElementById('login-form');
+    const loginBtn      = document.getElementById('login-btn');
+    const loginError    = document.getElementById('login-error');
+    const tableBody     = document.getElementById('table-body');
+    const statTotal     = document.getElementById('stat-total');
+    const countBadge    = document.getElementById('table-count-badge');
+    const searchInput   = document.getElementById('admin-search');
+
+    // Edit Modal
+    const editModal     = document.getElementById('edit-modal');
+    const editId        = document.getElementById('edit-id');
+    const editName      = document.getElementById('edit-name');
+    const editCafe      = document.getElementById('edit-cafe');
+    const editMobile    = document.getElementById('edit-mobile');
+    const editError     = document.getElementById('edit-error');
+    const editErrorText = document.getElementById('edit-error-text');
+    const editSaveBtn   = document.getElementById('edit-save-btn');
+
+    // Delete Modal
+    const deleteModal      = document.getElementById('delete-modal');
+    const deleteNameDisplay = document.getElementById('delete-name-display');
+    const deleteConfirmBtn  = document.getElementById('delete-confirm-btn');
+
+    // ════════════════════════════════
+    // LOGIN
+    // ════════════════════════════════
+    loginForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const pass = document.getElementById('admin-password').value;
+
+      if (!pass) {
+        loginError.textContent = 'أدخل كلمة السر.';
+        loginError.classList.add('visible');
+        return;
+      }
+
+      loginBtn.classList.add('loading');
+      loginBtn.disabled = true;
+      loginError.classList.remove('visible');
+
+      if (CONFIG.API_URL === 'YOUR_APPS_SCRIPT_WEB_APP_URL_HERE') {
+        loginError.textContent = '⚙️ رابط الـ API غير مضبوط. راجع config.js';
+        loginError.classList.add('visible');
+        loginBtn.classList.remove('loading');
+        loginBtn.disabled = false;
+        return;
+      }
+
+      try {
+        const result = await API.getAll(pass);
+        if (!result.success) {
+          loginError.textContent = 'كلمة السر غير صحيحة.';
+          loginError.classList.add('visible');
+          return;
+        }
+
+        adminPass = pass;
+        allRegistrations = result.data || [];
+        sessionStorage.setItem('admin_pass', pass);
+
+        loginScreen.hidden = true;
+        adminApp.classList.add('visible');
+        renderTable(allRegistrations);
+        updateStats(allRegistrations);
+        showToast('أهلاً بك في لوحة التحكم ☕', 'success');
+
+      } catch (err) {
+        loginError.textContent = 'تعذر الاتصال بالسيرفر. تحقق من اتصالك.';
+        loginError.classList.add('visible');
+        showToast('فشل الاتصال بالسيرفر.', 'error');
+      } finally {
+        loginBtn.classList.remove('loading');
+        loginBtn.disabled = false;
+      }
+    });
+
+    // ── Auto-login if session exists ──
+    window.addEventListener('DOMContentLoaded', () => {
+      const savedPass = sessionStorage.getItem('admin_pass');
+      if (savedPass) {
+        document.getElementById('admin-password').value = savedPass;
+        loginForm.dispatchEvent(new Event('submit'));
+      }
+    });
+
+    // ════════════════════════════════
+    // FETCH & RENDER
+    // ════════════════════════════════
+    async function fetchAndRender() {
+      setTableLoading(true);
+      try {
+        const result = await API.getAll(adminPass);
+        if (!result.success) throw new Error(result.error);
+        allRegistrations = result.data || [];
+        renderTable(filterData(allRegistrations, searchInput.value));
+        updateStats(allRegistrations);
+        showToast('تم تحديث البيانات ✅', 'success');
+      } catch (err) {
+        showToast('فشل تحميل البيانات.', 'error');
+      } finally {
+        setTableLoading(false);
+      }
+    }
+
+    function setTableLoading(loading) {
+      if (loading) {
+        tableBody.innerHTML = `
+          <tr><td colspan="6">
+            <div class="empty-table">
+              <div class="empty-icon">⏳</div>
+              <p>جارٍ تحميل البيانات…</p>
+            </div>
+          </td></tr>`;
+      }
+    }
+
+    function updateStats(data) {
+      statTotal.textContent = data.length;
+    }
+
+    function filterData(data, query) {
+      if (!query.trim()) return data;
+      const q = query.trim().toLowerCase();
+      return data.filter(r =>
+        r.name?.toLowerCase().includes(q) ||
+        r.cafe?.toLowerCase().includes(q) ||
+        r.mobile?.includes(q)
+      );
+    }
+
+    function renderTable(data) {
+      countBadge.textContent = data.length > 0 ? `(${data.length})` : '';
+
+      if (data.length === 0) {
+        tableBody.innerHTML = `
+          <tr><td colspan="6">
+            <div class="empty-table">
+              <div class="empty-icon" aria-hidden="true">📭</div>
+              <p>لا توجد تسجيلات حتى الآن.</p>
+            </div>
+          </td></tr>`;
+        return;
+      }
+
+      tableBody.innerHTML = data.map((reg, i) => `
+        <tr data-id="${escHtml(reg.id)}">
+          <td class="td-number">${i + 1}</td>
+          <td class="td-name">${escHtml(reg.name)}</td>
+          <td>${escHtml(reg.cafe)}</td>
+          <td dir="ltr" style="text-align:right">${escHtml(reg.mobile)}</td>
+          <td style="font-size:0.82rem; color: var(--clr-cream-dim)">${escHtml(reg.registeredAt)}</td>
+          <td class="td-actions no-print">
+            <button
+              class="btn btn--outline btn--sm edit-btn"
+              data-id="${escHtml(reg.id)}"
+              aria-label="تعديل تسجيل ${escHtml(reg.name)}"
+            >✏️ تعديل</button>
+            <button
+              class="btn btn--danger btn--sm delete-btn"
+              data-id="${escHtml(reg.id)}"
+              data-name="${escHtml(reg.name)}"
+              aria-label="حذف تسجيل ${escHtml(reg.name)}"
+            >🗑️ حذف</button>
+          </td>
+        </tr>
+      `).join('');
+
+      // Attach row action listeners
+      tableBody.querySelectorAll('.edit-btn').forEach(btn => {
+        btn.addEventListener('click', () => openEditModal(btn.dataset.id));
+      });
+      tableBody.querySelectorAll('.delete-btn').forEach(btn => {
+        btn.addEventListener('click', () => openDeleteModal(btn.dataset.id, btn.dataset.name));
+      });
+    }
+
+    // ── Escape HTML to prevent XSS ──
+    function escHtml(str) {
+      if (!str) return '';
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+    }
+
+    // ── Search ──
+    searchInput.addEventListener('input', () => {
+      renderTable(filterData(allRegistrations, searchInput.value));
+    });
+
+    // ── Refresh ──
+    document.getElementById('refresh-btn').addEventListener('click', fetchAndRender);
+
+    // ── Export PDF ──
+    document.getElementById('export-pdf-btn').addEventListener('click', () => {
+      // Show all data (not filtered) for PDF
+      renderTable(allRegistrations);
+      setTimeout(exportPDF, 100);
+    });
+
+    // ── Logout ──
+    document.getElementById('logout-btn').addEventListener('click', () => {
+      sessionStorage.removeItem('admin_pass');
+      adminPass = '';
+      allRegistrations = [];
+      adminApp.classList.remove('visible');
+      loginScreen.hidden = false;
+      document.getElementById('admin-password').value = '';
+      showToast('تم تسجيل الخروج.', 'info');
+    });
+
+    // ════════════════════════════════
+    // EDIT MODAL
+    // ════════════════════════════════
+    function openEditModal(id) {
+      const reg = allRegistrations.find(r => r.id === id);
+      if (!reg) return;
+
+      editId.value     = reg.id;
+      editName.value   = reg.name;
+      editCafe.value   = reg.cafe;
+      editMobile.value = reg.mobile;
+      editError.hidden = true;
+
+      editModal.hidden = false;
+      requestAnimationFrame(() => editModal.classList.add('open'));
+      editName.focus();
+    }
+
+    function closeEditModal() {
+      editModal.classList.remove('open');
+      editModal.addEventListener('transitionend', () => {
+        editModal.hidden = true;
+      }, { once: true });
+    }
+
+    document.getElementById('edit-modal-close').addEventListener('click', closeEditModal);
+    document.getElementById('edit-cancel-btn').addEventListener('click', closeEditModal);
+
+    editModal.addEventListener('click', (e) => {
+      if (e.target === editModal) closeEditModal();
+    });
+
+    editSaveBtn.addEventListener('click', async () => {
+      const name   = editName.value.trim();
+      const cafe   = editCafe.value.trim();
+      const mobile = editMobile.value.trim();
+
+      // Validate
+      if (!name || name.length < 3) {
+        editErrorText.textContent = 'الاسم مطلوب (3 أحرف على الأقل).';
+        editError.hidden = false;
+        editName.focus();
+        return;
+      }
+      if (!cafe || cafe.length < 2) {
+        editErrorText.textContent = 'اسم الكافيه مطلوب.';
+        editError.hidden = false;
+        editCafe.focus();
+        return;
+      }
+      if (!/^01[0125][0-9]{8}$/.test(mobile)) {
+        editErrorText.textContent = 'رقم الموبايل غير صحيح.';
+        editError.hidden = false;
+        editMobile.focus();
+        return;
+      }
+
+      editSaveBtn.classList.add('loading');
+      editSaveBtn.disabled = true;
+      editError.hidden = true;
+
+      try {
+        const result = await API.update(adminPass, {
+          id: editId.value,
+          name, cafe, mobile,
+        });
+
+        if (!result.success) throw new Error(result.error || 'فشل التعديل.');
+
+        // Update local array
+        const idx = allRegistrations.findIndex(r => r.id === editId.value);
+        if (idx !== -1) {
+          allRegistrations[idx] = { ...allRegistrations[idx], name, cafe, mobile };
+        }
+
+        renderTable(filterData(allRegistrations, searchInput.value));
+        updateStats(allRegistrations);
+        closeEditModal();
+        showToast('تم حفظ التعديلات بنجاح ✅', 'success');
+
+      } catch (err) {
+        editErrorText.textContent = err.message;
+        editError.hidden = false;
+      } finally {
+        editSaveBtn.classList.remove('loading');
+        editSaveBtn.disabled = false;
+      }
+    });
+
+    // ════════════════════════════════
+    // DELETE MODAL
+    // ════════════════════════════════
+    function openDeleteModal(id, name) {
+      deleteTargetId = id;
+      deleteNameDisplay.textContent = name;
+      deleteModal.hidden = false;
+      requestAnimationFrame(() => deleteModal.classList.add('open'));
+      deleteConfirmBtn.focus();
+    }
+
+    function closeDeleteModal() {
+      deleteModal.classList.remove('open');
+      deleteModal.addEventListener('transitionend', () => {
+        deleteModal.hidden = true;
+      }, { once: true });
+    }
+
+    document.getElementById('delete-modal-close').addEventListener('click', closeDeleteModal);
+    document.getElementById('delete-cancel-btn').addEventListener('click', closeDeleteModal);
+    deleteModal.addEventListener('click', (e) => {
+      if (e.target === deleteModal) closeDeleteModal();
+    });
+
+    deleteConfirmBtn.addEventListener('click', async () => {
+      deleteConfirmBtn.classList.add('loading');
+      deleteConfirmBtn.disabled = true;
+
+      try {
+        const result = await API.delete(adminPass, deleteTargetId);
+        if (!result.success) throw new Error(result.error || 'فشل الحذف.');
+
+        allRegistrations = allRegistrations.filter(r => r.id !== deleteTargetId);
+        renderTable(filterData(allRegistrations, searchInput.value));
+        updateStats(allRegistrations);
+        closeDeleteModal();
+        showToast('تم حذف التسجيل بنجاح 🗑️', 'success');
+
+      } catch (err) {
+        showToast(err.message || 'فشل الحذف.', 'error');
+      } finally {
+        deleteConfirmBtn.classList.remove('loading');
+        deleteConfirmBtn.disabled = false;
+      }
+    });
+
+    // ── Keyboard: close modal on Escape ──
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        if (!editModal.hidden)   closeEditModal();
+        if (!deleteModal.hidden) closeDeleteModal();
+      }
+    });
+  </script>
+</body>
+</html>

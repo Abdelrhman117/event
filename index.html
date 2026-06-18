@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>تسجيل الحضور — Coffee School Event</title>
+  <meta name="description" content="سجّل حضورك الآن في فعالية Coffee School بالتعاون مع شركاء متميزين. الفعالية بتاريخ 7 يوليو 2026." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Playfair+Display:wght@700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body class="reg-page">
+
+  <!-- Background FX -->
+  <div class="bg-orbs" aria-hidden="true">
+    <div class="bg-orb bg-orb--1"></div>
+    <div class="bg-orb bg-orb--2"></div>
+    <div class="bg-orb bg-orb--3"></div>
+  </div>
+  <div class="noise-overlay" aria-hidden="true"></div>
+
+  <!-- Toast Container -->
+  <div id="toast-container" role="status" aria-live="polite" aria-atomic="true"></div>
+
+  <!-- Navigation -->
+  <nav class="reg-nav" role="navigation" aria-label="شريط التنقل">
+    <div class="container">
+      <div class="reg-nav__inner">
+        <div class="brand" aria-label="Coffee School">
+          <span class="brand-icon" aria-hidden="true">☕</span>
+          <span>Coffee School</span>
+        </div>
+        <div class="event-badge" role="status">
+          <span aria-hidden="true">🔴</span>
+          <span>التسجيل مفتوح</span>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <main id="main-content">
+    <div class="container">
+      <section class="hero" aria-labelledby="hero-heading">
+
+        <!-- Right: Event Info -->
+        <div class="hero__content">
+          <p class="hero__eyebrow" aria-hidden="true">
+            <span>✦</span> دعوة خاصة
+          </p>
+
+          <h1 id="hero-heading" class="hero__title">
+            فعالية <span>Coffee School</span><br/>
+            والشركاء
+          </h1>
+
+          <p class="hero__subtitle">
+            تجربة فريدة تجمع عشاق القهوة مع أبرز الكافيهات والشركات الشريكة في مكان واحد.
+            شارك معنا وكن جزءاً من هذا اللقاء الاستثنائي.
+          </p>
+
+          <div class="event-details" role="list" aria-label="تفاصيل الفعالية">
+            <div class="event-detail" role="listitem">
+              <span class="icon" aria-hidden="true">📅</span>
+              <span>الثلاثاء، 7 يوليو 2026</span>
+            </div>
+            <div class="event-detail" role="listitem">
+              <span class="icon" aria-hidden="true">🕐</span>
+              <span>الساعة 1:00 ظهراً</span>
+            </div>
+            <div class="event-detail" role="listitem">
+              <span class="icon" aria-hidden="true">🤝</span>
+              <span>تعاون وشراكات</span>
+            </div>
+          </div>
+
+          <p class="partners-text">بالتعاون مع شركاء متميزين</p>
+        </div>
+
+        <!-- Left: Registration Form Card -->
+        <div>
+          <article class="glass-card reg-card" aria-labelledby="form-heading">
+
+            <!-- Form View -->
+            <div id="form-view">
+              <header class="reg-card__header">
+                <span class="reg-card__icon" aria-hidden="true">☕</span>
+                <h2 id="form-heading" class="reg-card__title">سجّل حضورك الآن</h2>
+                <p class="reg-card__subtitle">أدخل بياناتك للتأكيد على حضورك</p>
+              </header>
+
+              <form id="reg-form" class="reg-form" novalidate aria-label="نموذج تسجيل الحضور">
+
+                <!-- Full Name -->
+                <div class="form-group">
+                  <label class="form-label" for="field-name">
+                    <span aria-hidden="true">👤</span> الاسم الكامل
+                  </label>
+                  <input
+                    id="field-name"
+                    name="name"
+                    type="text"
+                    class="form-input"
+                    placeholder="أدخل اسمك الكامل"
+                    autocomplete="name"
+                    required
+                    minlength="3"
+                    aria-required="true"
+                    aria-describedby="name-error"
+                  />
+                  <span id="name-error" class="form-error" role="alert"></span>
+                </div>
+
+                <!-- Cafe Name -->
+                <div class="form-group">
+                  <label class="form-label" for="field-cafe">
+                    <span aria-hidden="true">🏪</span> اسم الكافيه
+                  </label>
+                  <input
+                    id="field-cafe"
+                    name="cafe"
+                    type="text"
+                    class="form-input"
+                    placeholder="اسم الكافيه الخاص بك"
+                    required
+                    minlength="2"
+                    aria-required="true"
+                    aria-describedby="cafe-error"
+                  />
+                  <span id="cafe-error" class="form-error" role="alert"></span>
+                </div>
+
+                <!-- Mobile -->
+                <div class="form-group">
+                  <label class="form-label" for="field-mobile">
+                    <span aria-hidden="true">📱</span> رقم الموبايل
+                  </label>
+                  <input
+                    id="field-mobile"
+                    name="mobile"
+                    type="tel"
+                    class="form-input"
+                    placeholder="01XXXXXXXXX"
+                    required
+                    pattern="^01[0125][0-9]{8}$"
+                    inputmode="tel"
+                    autocomplete="tel"
+                    aria-required="true"
+                    aria-describedby="mobile-error mobile-hint"
+                  />
+                  <span id="mobile-hint" class="form-hint">مثال: 01012345678</span>
+                  <span id="mobile-error" class="form-error" role="alert"></span>
+                </div>
+
+                <!-- API Error Banner -->
+                <div id="api-error-banner" class="api-error-banner" hidden role="alert">
+                  <span aria-hidden="true">⚠️</span>
+                  <span id="api-error-text">حدث خطأ. حاول مرة أخرى.</span>
+                </div>
+
+                <!-- Submit -->
+                <button
+                  id="submit-btn"
+                  type="submit"
+                  class="btn btn--primary btn--full"
+                  aria-label="تأكيد التسجيل في الفعالية"
+                >
+                  <div class="spinner" aria-hidden="true"></div>
+                  <span class="btn-text">✨ تأكيد التسجيل</span>
+                </button>
+
+              </form>
+            </div>
+
+            <!-- Success View -->
+            <div id="success-view" class="success-screen" hidden aria-live="polite" aria-atomic="true">
+              <div class="success-icon" aria-hidden="true">🎉</div>
+              <h2 class="success-title">تم التسجيل بنجاح!</h2>
+              <p class="success-subtitle">
+                شكراً لتسجيلك. نتطلع لرؤيتك في الفعالية.<br/>
+                <strong>الثلاثاء 7 يوليو 2026، الساعة 1 ظهراً</strong>
+              </p>
+
+              <div class="success-ticket" aria-label="ملخص بيانات التسجيل">
+                <div class="ticket-row">
+                  <span class="ticket-row__label">الاسم</span>
+                  <span class="ticket-row__value" id="ticket-name">—</span>
+                </div>
+                <div class="ticket-row">
+                  <span class="ticket-row__label">الكافيه</span>
+                  <span class="ticket-row__value" id="ticket-cafe">—</span>
+                </div>
+                <div class="ticket-row">
+                  <span class="ticket-row__label">الموبايل</span>
+                  <span class="ticket-row__value" id="ticket-mobile">—</span>
+                </div>
+                <div class="ticket-row">
+                  <span class="ticket-row__label">الفعالية</span>
+                  <span class="ticket-row__value">7/7/2026 — 1:00 ظهراً</span>
+                </div>
+              </div>
+
+              <button id="register-another-btn" class="btn btn--outline" aria-label="تسجيل شخص آخر">
+                + تسجيل شخص آخر
+              </button>
+            </div>
+
+          </article>
+        </div>
+
+      </section>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="reg-footer" role="contentinfo">
+    <div class="container">
+      <p>☕ Coffee School Event &mdash; جميع الحقوق محفوظة 2026</p>
+    </div>
+  </footer>
+
+  <script src="config.js"></script>
+  <script src="app.js"></script>
+  <script>
+    // ════════════════════════════════════════════
+    // Registration Page Logic
+    // ════════════════════════════════════════════
+    const regForm       = document.getElementById('reg-form');
+    const submitBtn     = document.getElementById('submit-btn');
+    const formView      = document.getElementById('form-view');
+    const successView   = document.getElementById('success-view');
+    const regAnotherBtn = document.getElementById('register-another-btn');
+    const apiErrorBanner = document.getElementById('api-error-banner');
+    const apiErrorText   = document.getElementById('api-error-text');
+
+    // ── Field Validation ──
+    function validateField(input) {
+      const errorEl = document.getElementById(
+        input.id.replace('field-', '') + '-error'
+      );
+      if (!errorEl) return true;
+
+      let msg = '';
+      if (input.validity.valueMissing) {
+        msg = 'هذا الحقل مطلوب.';
+      } else if (input.id === 'field-mobile' && input.validity.patternMismatch) {
+        msg = 'أدخل رقم موبايل مصري صحيح (يبدأ بـ 010 أو 011 أو 012 أو 015).';
+      } else if (input.validity.tooShort) {
+        msg = `الحد الأدنى ${input.minLength} أحرف.`;
+      }
+
+      errorEl.textContent = msg;
+      errorEl.classList.toggle('visible', !!msg);
+      return !msg;
+    }
+
+    // ── Live Validation ──
+    regForm.querySelectorAll('.form-input').forEach(input => {
+      input.addEventListener('blur', () => {
+        input.classList.add('touched');
+        validateField(input);
+      });
+      input.addEventListener('input', () => {
+        if (input.classList.contains('touched')) validateField(input);
+        apiErrorBanner.hidden = true;
+      });
+    });
+
+    // ── Submit ──
+    regForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      apiErrorBanner.hidden = true;
+
+      // Validate all fields
+      let valid = true;
+      regForm.querySelectorAll('.form-input').forEach(input => {
+        input.classList.add('touched');
+        if (!validateField(input)) valid = false;
+      });
+      if (!valid) return;
+
+      // Check config
+      if (CONFIG.API_URL === 'YOUR_APPS_SCRIPT_WEB_APP_URL_HERE') {
+        apiErrorText.textContent = '⚙️ لم يتم ضبط رابط الـ API بعد. راجع ملف config.js';
+        apiErrorBanner.hidden = false;
+        return;
+      }
+
+      // Loading state
+      submitBtn.classList.add('loading');
+      submitBtn.disabled = true;
+
+      try {
+        const result = await API.register({
+          name:   document.getElementById('field-name').value.trim(),
+          cafe:   document.getElementById('field-cafe').value.trim(),
+          mobile: document.getElementById('field-mobile').value.trim(),
+        });
+
+        if (!result.success) throw new Error(result.error || 'فشل التسجيل.');
+
+        // Populate ticket
+        document.getElementById('ticket-name').textContent   = document.getElementById('field-name').value.trim();
+        document.getElementById('ticket-cafe').textContent   = document.getElementById('field-cafe').value.trim();
+        document.getElementById('ticket-mobile').textContent = document.getElementById('field-mobile').value.trim();
+
+        // Show success
+        formView.style.display = 'none';
+        successView.hidden = false;
+        successView.classList.add('visible');
+        successView.focus();
+        showToast('تم التسجيل بنجاح! 🎉', 'success');
+
+      } catch (err) {
+        apiErrorText.textContent = err.message || 'حدث خطأ. تحقق من اتصالك وحاول مجدداً.';
+        apiErrorBanner.hidden = false;
+        showToast(err.message || 'فشل التسجيل.', 'error');
+      } finally {
+        submitBtn.classList.remove('loading');
+        submitBtn.disabled = false;
+      }
+    });
+
+    // ── Register Another ──
+    regAnotherBtn.addEventListener('click', () => {
+      regForm.reset();
+      regForm.querySelectorAll('.form-error').forEach(el => el.classList.remove('visible'));
+      regForm.querySelectorAll('.form-input').forEach(el => el.classList.remove('touched'));
+      apiErrorBanner.hidden = true;
+      successView.hidden = true;
+      successView.classList.remove('visible');
+      formView.style.display = '';
+      document.getElementById('field-name').focus();
+    });
+  </script>
+</body>
+</html>
