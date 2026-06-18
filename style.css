@@ -482,6 +482,39 @@ button { cursor: pointer; font-family: inherit; }
   filter: drop-shadow(0 0 8px rgba(201, 151, 58, 0.5));
 }
 
+/* Logo Images */
+.brand-logo {
+  height: 36px;
+  width: auto;
+  display: block;
+}
+
+.brand-logo--round { border-radius: 50%; }
+.brand-logo--sm { height: 26px; }
+
+.brand-sep {
+  color: var(--clr-cream-dim);
+  font-size: 0.9rem;
+}
+
+.login-card__logos {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sp-md);
+  margin-bottom: var(--sp-lg);
+}
+
+.login-card__logos .brand-logo { height: 48px; }
+
+.footer-logos {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sp-md);
+  margin-bottom: var(--sp-sm);
+}
+
 .event-badge {
   display: flex;
   align-items: center;
@@ -834,7 +867,6 @@ a.location-card:hover {
   text-align: center;
 }
 
-.login-card__icon { font-size: 3rem; margin-bottom: var(--sp-lg); display: block; }
 .login-card__title { font-size: 1.5rem; font-weight: 900; color: var(--clr-gold-light); margin-bottom: var(--sp-xs); }
 .login-card__sub   { font-size: 0.9rem; color: var(--clr-cream-dim); margin-bottom: var(--sp-xl); }
 
