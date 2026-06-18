@@ -6,7 +6,7 @@
 
 const CONFIG = {
   // ← ضع هنا رابط الـ Web App بعد النشر على Google Apps Script
-  API_URL: 'YOUR_APPS_SCRIPT_WEB_APP_URL_HERE',
+  API_URL: 'https://script.google.com/macros/s/AKfycbzEIAtemmevzpWw-FZBKKhd4M45d57azSVoQPotI1iPqMoRt977PRhZAlLc7DEUvQB8-A/exec',
 
   // كلمة سر الأدمن (يجب أن تطابق ADMIN_PASS في Code.gs)
   ADMIN_PASS: 'coffeeschool2026',
